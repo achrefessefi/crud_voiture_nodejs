@@ -1,0 +1,71 @@
+{% extends 'layout.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/styles.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Search</h2>
+
+        <div class="card">
+            <form action="/formsvoiture/recherche" method="POST">
+                <label for="matriculeSearch">Search by Matricule</label>
+                <input type="number" id="matriculeSearch" name="matricule" placeholder="Matricule" required>
+                <button type="submit">Search</button>
+            </form>
+
+            {% if RechVoiture is defined %}
+                {% if RechVoiture == "notFound" %}
+                    <p><b>Vehicle not found</b></p>
+                {% else %}
+                    <p><b>Matricule: </b>{{ RechVoiture.matricule }}</p>
+                    <p><b>Marque: </b>{{ RechVoiture.marque }}</p>
+                    <p><b>Modele: </b>{{ RechVoiture.modele }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <form action="/formsvoiture/create" method="POST">
+                <label for="matricule">Matricule</label>
+                <input type="number" id="matricule" name="matricule" placeholder="Matricule" required>
+
+                <label for="marque">Marque</label>
+                <input type="text" id="marque" name="marque" placeholder="Marque" required>
+
+                <label for="modele">Modele</label>
+                <input type="text" id="modele" name="modele" placeholder="Modele" required>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <h2>Vehicle List</h2>
+
+        <div class="card">
+            {% for voiture in Voitures %}
+                <p><b>Matricule: </b>{{ voiture.matricule }}</p>
+                <p><b>Marque: </b>{{ voiture.marque }}</p>
+                <p><b>Modele: </b>{{ voiture.modele }}</p>
+                <a href="/formsvoiture/update/{{ voiture.id }}">Update</a>
+                <a href="/formsvoiture/delete/{{ voiture.id }}">Delete</a>
+                <hr>
+            {% endfor %}
+        </div>
+
+        
+
+        <button onclick="list()">Back to Vehicle List</button>
+    </div>
+
+    <script>
+        async function list() {
+            window.location.href = '/formsvoiture';
+        }
+    </script>
+
+{% endblock %}

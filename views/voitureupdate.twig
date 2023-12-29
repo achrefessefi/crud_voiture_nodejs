@@ -1,0 +1,15 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{matricule}}</h1>
+  <p>Welcome {{matricule}}</p>
+  <div>
+  <form action="/formsvoiture/update/{{Voiture.id}}" method="POST" >
+  <label for="title">Update a Voiture</label>
+  <input type="number" id="matricule" name="matricule" placeholder="matricule" value="{{Voiture.matricule}}"/>
+  <input type="text" id="marque" name="marque" placeholder="marque" value="{{Voiture.marque}}"/>
+  <input type="text" id="modele" name="modele" placeholder="modele" value="{{Voiture.modele}}"/>
+  <input type="submit" value="Save" />
+  </form>
+  </div>
+{% endblock %}
